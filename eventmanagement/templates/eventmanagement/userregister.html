@@ -13,11 +13,14 @@
         <input type="tel" id="phone" name="phone" placeholder="Mobile Number"><br>
         <input type="Email" name="username" placeholder="Email Address"><br>
         <input type="Email" placeholder="Confirm Email Address"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="password" placeholder="Confirm Password"><br>
+        <input type="password" name="password1" placeholder="Password"><br>
+        <input type="password" name="password2" placeholder="Confirm Password"><br>
    
         <input type="submit" value="Submit"><br>
         Already have an account? <a href="{%url 'userlogin'%}">Sign in here</a>
     </form>
+    {%if message%}
+        <div>{{message}}</div>
+    {%endif%}
 </body>
 {%endblock%}
