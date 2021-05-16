@@ -1,0 +1,24 @@
+{%extends "eventmanagement/layout.html"%}
+{%block body%}
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Business account Sign up</h1><br>
+    Create an account<br>
+    <form action="{%url 'eventmanagerregister'%}" method="POST">
+        {%csrf_token%}
+        <input type="text" name="First_name" placeholder="First Name"><br>
+        <input type="text" name="Last_name" placeholder="Last Name"><br>
+        <input type="tel" id="phone" name="phone" placeholder="Mobile Number"><br>
+        <input type="Email" name="username" placeholder="Email Address"><br>
+        <input type="Email" placeholder="Confirm Email Address"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="password" placeholder="Confirm Password"><br>
+   
+        <input type="submit" value="Submit"><br>
+        Already have an business account? <a href="{%url 'eventmanagerlogin'%}">Sign in here</a><br>
+        Click here if customer !! <a href="{%url 'userlogin'%}">Customer Login</a>
+    </form>
+</body>
+{%endblock%}

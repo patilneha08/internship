@@ -40,3 +40,36 @@ def userregister(request):
         ins=User(First_name=First_name, Last_name=Last_name, phone=phone, username=username, password=password)
         ins.save()
     return render(request,"eventmanagement/userregister.html")
+
+
+def eventmanagerlogout(request):
+    logout(request)
+    return render(request,"eventmanagement/eventmanagerlogin.html",{
+        "message":"Logged out."
+    })
+
+
+def eventmanagerlogin(request):
+    if request.method=="POST":
+        username=request.POST["username"]
+        password=request.POST["password"]
+        user=authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request,"eventmanagement/eventmanagerlogin.html",{
+                "message":"Invalid Credentials"
+            })
+    return render(request,"eventmanagement/eventmanagerlogin.html")
+    
+def eventmanagerregister(request):
+    if request.method=="POST":
+        First_name=request.POST['First_name']
+        Last_name=request.POST['Last_name']
+        phone=request.POST['phone']
+        username=request.POST['username']
+        password=request.POST['password']
+        ins=User(First_name=First_name, Last_name=Last_name, phone=phone, username=username, password=password)
+        ins.save()
+    return render(request,"eventmanagement/eventmanagerregister.html")
