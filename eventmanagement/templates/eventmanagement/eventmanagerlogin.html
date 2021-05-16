@@ -1,7 +1,7 @@
 {%extends "eventmanagement/layout.html"%}
 {%block body%}
 <head>
-    <title>Login</title>
+    <title>Event Manager Login</title>
 </head>
 <body>
     {%if message%}
@@ -10,13 +10,13 @@
     <form action="{%url 'userlogin'%}" method="POST">
         {%csrf_token%}
         <h1>Welcome to La fête</h1></b><br>
+        <h2>Business Login</h2>
         <input type="Email" placeholder="Username or Email" name="username"><br>
         <input type="password" placeholder="Password" name="password"><br>
         <input type="submit" value="Sign in"><br>
         Don't have an account?
-        <a href="{%url 'userregister'%}">Create account</a><br>
-        Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
-        <a 
+        <a href="{%url 'eventmanagerregister'%}">Create account</a><br>
+        <a href="{%url 'userlogin'%}">Click here if Customer</a>
     </form>
 </body>
 {%endblock%}
