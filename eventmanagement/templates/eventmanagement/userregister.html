@@ -6,19 +6,31 @@
 <body>
     <h1>Sign up</h1><br>
     Create an account<br>
-    <form action="" method="POST">
+    <form action="{%url 'userregister'%}" method="POST">
         {%csrf_token%}
-        {{form.username.labe}}
+        {{form.first_name}}<br>
+        {{form.last_name}}<br>
         {{form.username}}<br>
-        {{form.email.labe}}
-        {{form.email}}<br>
-        {{form.password1.labe}}
         {{form.password1}}<br>
-        {{form.password2.labe}}
         {{form.password2}}<br>
         <input type="submit" value="Submit"><br>
         Already have an account? <a href="{%url 'userlogin'%}">Sign in here</a>
     </form>
     {{form.errors}}
+    <script>
+
+		//Query All input fields
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='First Name..';
+		form_fields[2].placeholder='Last Name..';
+        form_fields[3].placeholder='Username or Email..';
+		form_fields[4].placeholder='Password...';
+        form_fields[5].placeholder='Re-enter Password...';
+
+
+		for (var field in form_fields){	
+			form_fields[field].className += ' form-control'
+		}
+	</script>
 </body>
 {%endblock%}

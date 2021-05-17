@@ -30,7 +30,6 @@ def userregister(request):
 
                 return redirect('userlogin')
             
-
         context = {'form':form}
         return render(request, 'eventmanagement/userregister.html', context)
 
