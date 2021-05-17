@@ -6,21 +6,19 @@
 <body>
     <h1>Sign up</h1><br>
     Create an account<br>
-    <form action="{%url 'userregister'%}" method="POST">
+    <form action="" method="POST">
         {%csrf_token%}
-        <input type="text" name="First_name" placeholder="First Name"><br>
-        <input type="text" name="Last_name" placeholder="Last Name"><br>
-        <input type="tel" id="phone" name="phone" placeholder="Mobile Number"><br>
-        <input type="Email" name="username" placeholder="Email Address"><br>
-        <input type="Email" placeholder="Confirm Email Address"><br>
-        <input type="password" name="password1" placeholder="Password"><br>
-        <input type="password" name="password2" placeholder="Confirm Password"><br>
-   
+        {{form.username.labe}}
+        {{form.username}}<br>
+        {{form.email.labe}}
+        {{form.email}}<br>
+        {{form.password1.labe}}
+        {{form.password1}}<br>
+        {{form.password2.labe}}
+        {{form.password2}}<br>
         <input type="submit" value="Submit"><br>
         Already have an account? <a href="{%url 'userlogin'%}">Sign in here</a>
     </form>
-    {%if message%}
-        <div>{{message}}</div>
-    {%endif%}
+    {{form.errors}}
 </body>
 {%endblock%}

@@ -10,13 +10,15 @@
     <form action="{%url 'userlogin'%}" method="POST">
         {%csrf_token%}
         <h1>Welcome to La fête</h1></b><br>
-        <input type="Email" placeholder="Username or Email" name="username"><br>
+        <input type="email" placeholder="Username or Email" name="username"><br>
         <input type="password" placeholder="Password" name="password"><br>
         <input type="submit" value="Sign in"><br>
-        Don't have an account?
-        <a href="{%url 'userregister'%}">Create account</a><br>
-        Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
-        <a 
     </form>
+    {% for message in messages %}
+		<p>{{message}}</p>
+	{% endfor %}
+    Don't have an account?
+    <a href="{%url 'userregister'%}">Create account</a><br>
+    Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
 </body>
 {%endblock%}

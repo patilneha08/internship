@@ -1,55 +1,61 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
+from django.http import HttpResponse
+from django.forms import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate,login,logout
-from .models import CustomUser, Eventmanager
-from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect 
+from django.contrib.auth import authenticate, login, logout
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+from .models import *
+from .forms import CreateUserForm
 
 def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("userlogin"))
-    return render(request,"eventmanagement/user.html")
+    return render(request, 'eventmanagement/user.html')
+
+def userregister(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+
+                return redirect('userlogin')
+            
+
+        context = {'form':form}
+        return render(request, 'eventmanagement/userregister.html', context)
 
 def userlogin(request):
-    if request.method=="POST":
-        username=request.POST["username"]
-        password=request.POST["password"]
-        user=CustomUser.objects.filter(request,username=username,password=password)
-        if user is not None:
-            login(request,user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(request,"eventmanagement/userlogin.html",{
-                "message":"Invalid Credentials"
-            })
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        if request.method == 'POST':
+            username =request.POST.get('username')
+            password =request.POST.get('password')
 
-    return render(request,"eventmanagement/userlogin.html")
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.info(request, 'Username OR password is incorrect')
+
+        context = {}
+        return render(request, 'eventmanagement/userlogin.html', context)
 
 def userlogout(request):
     logout(request)
-    return render(request,"eventmanagement/userlogin.html",{
-        "message":"Logged out."
-    })
-
-def userregister(request):
-    if request.method=="POST":
-        First_name=request.POST['First_name']
-        Last_name=request.POST['Last_name']
-        phone=request.POST['phone']
-        username=request.POST['username']
-        password=request.POST['password']
-        password1=request.POST['password1']
-        if password==password1:
-            if CustomUser.objects.filter(username=username).exists():
-                return render(request,"eventmanagement/eventmanagerregister.html",{
-                "message":"Username taken"
-                })
-            ins=CustomUser(First_name=First_name, Last_name=Last_name, phone=phone, username=username, password1=password1,password2=password2)
-            ins.save()
-        else:
-            print("Password does not match.")
-    return render(request,"eventmanagement/userregister.html")
-
+    return redirect('userlogin')
 
 def eventmanagerlogout(request):
     logout(request)
