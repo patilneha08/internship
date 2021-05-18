@@ -8,23 +8,25 @@
 <body>
     <div class="mb-3">
         <div class="container">
-    {%if message%}
-        <div>{{message}}</div>
-    {%endif%}
-    <form action="{%url 'userlogin'%}" method="POST">
-        {%csrf_token%}
-        <h1>Welcome to La fête</h1></b><br>
-        <div class="mb-3">
-        <input type="Email" class="form-label" placeholder="Username or Email" name="username"><br>
-        <input type="password" class="form-label" placeholder="Password" name="password"><br>
-        <input type="submit" class="btn btn-primary" value="Sign in"><br>
+            {%if message%}
+                <div>{{message}}</div>
+            {%endif%}
+            <form action="{%url 'userlogin'%}" method="POST">
+            {%csrf_token%}
+                <h1>Welcome to La fête</h1></b><br>
+                <div class="mb-3">
+                    <input type="Email" class="form-label" placeholder="Username or Email" name="username"><br>
+                    <input type="password" class="form-label" placeholder="Password" name="password"><br>
+                    <input type="submit" class="btn btn-primary" value="Sign in"><br>
+                </div>
+                Don't have an account?
+                <a href="{%url 'userregister'%}">Create account</a><br>
+                Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
+            </form>
         </div>
-        Don't have an account?
-        <a href="{%url 'userregister'%}">Create account</a><br>
-        Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
     </div>
-    </div>
-
-    </form>
+    {% for message in messages %}
+		<p>{{message}}</p>
+	{% endfor %}
 </body>
 {%endblock%}

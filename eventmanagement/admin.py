@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Eventmanager, CustomUser
+from .models import Eventmanager, Customer
 
-admin.site.register(CustomUser)
+admin.site.register(Customer)
 admin.site.register(Eventmanager)
