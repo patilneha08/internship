@@ -45,22 +45,23 @@ def userlogin(request):
     else:
         if request.method == 'POST':
             username=request.POST.get('username')
-            password=request.POST.get('password')
-            email_qs = Customer.objects.filter(username=username)
-            if not email_qs.exists():
-                return render(request,"eventmanagement/userlogin.html",{
-                    "message":"User does not exist"
-                    })      
-            else:
-                user = authenticate(username=username, password=password)  
-                if user is not None:
-                    login(request,user)
-                    return HttpResponseRedirect(reverse("userindex"))
+            password1=request.POST.get('password1')
+            try:
+                user=Customer.objects.get(username=username)
+                if user.password1==password1:
+                    return render(request,"eventmanagement/user.html",{
+                        "user":user  
+                    })
                 else:
                     return render(request,"eventmanagement/userlogin.html",{
-                    "message":"Invalid Credentials"
+                        "message":"Invalid Credentials"
                     })
-        return render(request,"eventmanagement/userlogin.html")
+            except Exception as e:
+                return render(request,"eventmanagement/userlogin.html",{
+                        "message":"User Does not exist!"
+                    })
+        else:
+            return render(request,"eventmanagement/userlogin.html")
 
 #Logout Page for Customer
 def userlogout(request):
@@ -74,7 +75,7 @@ def eventmanagerindex(request):
 #Registration page for Event Manager
 def eventmanagerregister(request):
     if request.user.is_authenticated:
-        return redirect('eventmanagerindex')
+        return redirect('userindex')
     else:
         if request.method == 'POST':
             form=Eventmanagerform(request.POST)
@@ -90,35 +91,38 @@ def eventmanagerregister(request):
                 user = form.cleaned_data.get('username')
                 messages.success(request, 'Account was created for ' + user)
 
-                return redirect('eventmanagerlogin')
+                return redirect('userlogin')
         else:
             form=Eventmanagerform()
     context = {'form':form}
-    return render(request, 'eventmanagement/eventmanagerregister.html', context)
+    return render(request, 'eventmanagement/userregister.html', context)
 
 #Login page for Event Manager
 def eventmanagerlogin(request):
     if request.user.is_authenticated:
-        return redirect('eventmanagerindex')
+        return redirect('userindex')
     else:
         if request.method == 'POST':
             username=request.POST.get('username')
-            password=request.POST.get('password')
-            email_qs = Eventmanager.objects.filter(username=username)
-            if not email_qs.exists():
-                return render(request,"eventmanagement/eventmanagerlogin.html",{
-                    "message":"User does not exist"
-                    })      
-            else:
-                user = authenticate(username=username, password=password)  
-                if user is not None:
-                    login(request,user)
-                    return HttpResponseRedirect(reverse("eventmanagerindex"))
+            password1=request.POST.get('password1')
+            try:
+                user=Eventmanager.objects.get(username=username)
+                if user.password1==password1:
+                    return render(request,"eventmanagement/eventmanager.html",{
+                        "user":user
+                    })
                 else:
                     return render(request,"eventmanagement/eventmanagerlogin.html",{
-                    "message":"Invalid Credentials"
+                        "message":"Invalid Credentials"
                     })
-        return render(request,"eventmanagement/eventmanagerlogin.html")             
+            except Exception as e:
+                return render(request,"eventmanagement/eventmanagerlogin.html",{
+                        "message":"User Does not exist!"
+                    })
+        else:
+            return render(request,"eventmanagement/eventmanagerlogin.html",{
+                "message":"Something went wrong!"
+            })            
     
 #Logout page for Event Manager
 def eventmanagerlogout(request):
