@@ -9,6 +9,10 @@
     <h1>
         Welcome {{user.first_name}}
     </h1>
+            {%if message%}
+                <div>{{message}}</div>
+            {%endif%}
+    <a href="{%url 'hostevent'%}">Host an event</a>
     <a href="{%url 'eventmanagerlogout'%}">Logout</a>
 </body>
 {%endblock%}

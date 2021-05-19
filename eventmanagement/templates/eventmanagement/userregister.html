@@ -12,24 +12,31 @@
     Create an account<br>
     <div class="mb-3">  
     <form role="form" action="{%url 'userregister'%}" method="POST">
-        {%csrf_token%}
-        {{form.as_p}}
-        {% comment %} <input type="text" name="first_name" class="form-label" placeholder="First Name"><br>
-        <input type="text" name="last_name" class="form-label" placeholder="Last Name"><br>
-        <input type="tel" class="form-label" id="phone" name="phone" placeholder="Mobile Number"><br>
-        <input type="Email" name="username" class="form-label" placeholder="Username or Email Address"><br>
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        <input type="password" name="password" class="form-label" placeholder="Password"><br>
-        <input type="password" name="password1" class="form-label" placeholder="Confirm Password"><br> {% endcomment %}
-        <div id="passwordHelpBlock" class="form-text">
-            Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-          </div> 
-        <input type="submit" value="Submit"><br>
-        Already have an account? <a href="{%url 'userlogin'%}">Sign in here</a>
+        {% csrf_token %}
+            First Name<br>
+            <input type="text" name="first_name" autocomplete="off" required><br>
+
+            Last Name<br>
+            <input type="text" name="last_name" autocomplete="off" required><br>
+
+            Contact Number<br>
+            <input type="text" name="phone" autocomplete="off" required><br>
+
+            Username<br>
+            <input type="text" name="username" autocomplete="off" required><br>
+
+            Password<br>
+            <input type="password" name="password1" minlength="8" autocomplete="off" required><br>
+
+            Confirm Password<br>
+            <input type="password" name="password2" minlength="8" autocomplete="off" required><br>
+            <div id="passwordHelpBlock" class="form-text">
+                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+            </div> 
+            <input type="submit" value="Submit"><br>
+            Already have an account? <a href="{%url 'userlogin'%}">Sign in here</a>
+    </form>
     </div>
     </div> 
-    </form>
-    {{form.errors}}
-    
 </body>
 {%endblock%}

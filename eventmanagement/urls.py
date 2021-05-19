@@ -10,4 +10,5 @@ urlpatterns=[
     path("eventmanagerlogin",views.eventmanagerlogin,name="eventmanagerlogin"),
     path("eventmanagerregister",views.eventmanagerregister,name="eventmanagerregister"),
     path("eventmanagerlogout",views.eventmanagerlogout,name="eventmanagerlogout"),
+    path("hostevent",views.hostevent,name="hostevent"),
 ]
