@@ -31,9 +31,11 @@ def userregister(request):
         if(user.password1==user.password2):
             user.save()
             request.session['uname'] = user.first_name
-            return redirect('userlogin')
+            return render(request,'eventmanagement/userlogin.html',{
+                "message":"Account successfully Created."
+            })
         else:
-            return render(request,'eventmanagement/userregister',{
+            return render(request,'eventmanagement/userregister.html',{
                 "message":"Passwords do not match."
             })
     return render(request, 'eventmanagement/userregister.html',{
@@ -57,8 +59,8 @@ def userlogin(request):
                     "message":"Invalid Credentials"
                 })
         except Exception as e:
-            return render(request,"eventmanagement/userregister.html",{
-                    "message":"User Does not exist! Register now."
+            return render(request,"eventmanagement/userlogin.html",{
+                "message":"Invalid Credentials."
                 })
     else:
         return render(request,"eventmanagement/userlogin.html")

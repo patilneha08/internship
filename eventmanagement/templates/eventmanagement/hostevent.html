@@ -13,22 +13,7 @@
                 <form role="form" action="{%url 'hostevent'%}" method="POST">
                 {%csrf_token%}
                     {{form.as_p}}
-                    {% comment %} <label for="Categories">Choose a category:</label>
-                    <select id="Categories" name="form.category">
-                        <option value="Horror">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="fiat">Fiat</option>
-                        <option value="audi">Audi</option>
-                    </select> {% endcomment %}
                     <input type="submit" class="btn btn-primary" value="Submit"><br>
-        {% comment %} <input type="text" class="form-label" name="first_name" placeholder="First Name"><br>
-        <input type="text" class="form-label" name="last_name" placeholder="Last Name"><br>
-        <input type="tel" class="form-label" id="phone" name="phone" placeholder="Mobile Number"><br>
-        <input type="Email" class="form-label" name="username" placeholder="Email Address"><br>
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        <input type="password" class="form-label" placeholder="Enter Password" name="password"><br>
-        <input type="password" class="form-label" name="password1" placeholder="Confirm Password"><br>
-        <div id="passwordHelpBlock" class="form-text"> {% endcomment %}
                 </form>
                 {{form.errors}}
             </div>
