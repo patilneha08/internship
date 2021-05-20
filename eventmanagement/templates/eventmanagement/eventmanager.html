@@ -9,10 +9,24 @@
     <h1>
         Welcome {{user.first_name}}
     </h1>
-            {%if message%}
-                <div>{{message}}</div>
-            {%endif%}
     <a href="{%url 'hostevent'%}">Host an event</a>
+    {%if message%}
+        <div>{{message}}</div>
+    {%endif%}
+
+    Your events-<br>
+    ------------------------------------------------<br>
+        {% for event in events %}
+            {{event.name}}<br>
+            {{event.description}}<br>
+            {{event.date}}<br>
+            {{event.category}}<br>
+            {{event.count}}<br>
+            <a href="{%url 'deleteevent' event.id%}">Delete event</a><br>
+            --------------------------------------------------<br>
+        {% endfor %}
+
+
     <a href="{%url 'eventmanagerlogout'%}">Logout</a>
 </body>
 {%endblock%}
