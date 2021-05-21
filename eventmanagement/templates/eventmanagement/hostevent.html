@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Host an Event</h1>
+    <h1>Host an Event</h1><br>
     <div class="mb-3">
         <div class="container">
             <div class="mb-3">
@@ -19,7 +19,7 @@
                 <form role="form" action="{%url 'hostevent'%}" method="POST">
                 {%csrf_token%}    
                 <div class="mb-3">
-                    <input type="text" placeholder="Name of Event" name="name" autocomplete="off"><br>
+                    <input type="text" placeholder="Name of Event" name="name" autocomplete="off"><br><br>
                     <label for="categories">Choose a Category:</label>
                     <select id="categories" name="category">
                         <option value="Horror">Horror</option>
@@ -31,27 +31,25 @@
                         <option value="Music">Music</option>
                         <option value="Dance">Dance</option>
                         <option value="Others">Others</option>
-                    </select><br>
-                    <input type="number" id="quantity" name="maxpeople" min="10" placeholder="Maximum no. of participants"><br>
-                    <input type="date" min="{{date}}" placeholder="Date" name="date" autocomplete="off"><br>
-                    <input type="time" min="07:00" max="20:00" placeholder="Time" name="time"><br>
-                    <input type="text" placeholder="Street Address" name="location1"><br>
-                    <input type="text" placeholder="Street Address line2" name="location2"><br>
-                    <input type="text" placeholder="City" name="city"><br>
-                    <input type="text" placeholder="State/Province" name="state"><br>
-                    <input type="number" placeholder="Postal/Zip Code" name="pincode" autocomplete="off"><br>
-                    <input type="number" placeholder="Price/ticket" name="cost"><br>
-                    <label for="w3review">Description of the Event:</label> <br>      
-                    <textarea id="w3review" name="description" rows="4" cols="50"></textarea><br>
-                    <input type="submit" class="btn btn-primary" value="Submit"><br>
+                    </select><br><br>
+                    <input type="number" id="quantity" name="maxpeople" min="10" placeholder="Maximum no. of participants"><br><br>
+                    <input type="date" min="{{date}}" placeholder="Date" name="date" autocomplete="off"><br><br>
+                    <input type="time" min="07:00" max="20:00" placeholder="Time" name="time"><br><br>
+                    <input type="text" placeholder="Street Address" name="location1"><br><br>
+                    <input type="text" placeholder="Street Address line2" name="location2"><br><br>
+                    <input type="text" placeholder="City" name="city"><br><br>
+                    <input type="text" placeholder="State/Province" name="state"><br><br>
+                    <input type="number" placeholder="Postal/Zip Code" name="pincode" autocomplete="off"><br><br>
+                    <input type="number" placeholder="Price/ticket" name="cost"><br><br>
+                    <label for="w3review">Description of the Event:</label> <br><br> 
+                    <textarea id="w3review" name="description" rows="4" cols="50"></textarea><br><br>
+                    <input type="submit" class="btn btn-primary" value="Submit"><br><br>
                 </div>
-                Don't have an account?
-                <a href="{%url 'userregister'%}">Create account</a><br>
-                Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
+                <a href="{%url 'eventmanagerindex'%}">Back to homepage</a><br>
+                <a href="{%url 'eventmanagerlogout'%}"> Logout</a>
             </form>
             </div>
         </div>
     </div>  
-    <a href="{%url 'eventmanagerlogout'%}">Logout</a>
 </body>
 {%endblock%}

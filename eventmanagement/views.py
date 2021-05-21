@@ -136,7 +136,7 @@ def eventmanagerlogout(request):
         del request.session['aname']
     return render(request,'eventmanagement/eventmanagerlogin.html')
 
-#Host an Event
+#Host an Event by Event Manager
 def hostevent(request):
     if request.method=="POST":
         event=Event()   
@@ -164,12 +164,16 @@ def hostevent(request):
             return redirect('eventmanagerindex')
     return render(request, 'eventmanagement/hostevent.html') 
 
+#Lists all the events of the Customer
+def userevent(request):
+    username=request.session['uname']
+    users=Customer.objects.get(username=username)
+    events=users.events.all()
+    return render(request,"eventmanagement/userevent.html",{
+                "events":events
+            })
 
-
-def userevents(request):
-    pass
-
-
+#Book an event by Customer
 def bookevent(request,event_id):
     if request.method == 'POST':
         temp=event_id
@@ -184,8 +188,7 @@ def bookevent(request,event_id):
             })
     return render(request,"eventmanagement/temp.html")
 
-
-
+#Confirm the booked event by Customer
 def confirmevent(request, event_id):
     if request.method=='POST':
         temp=event_id
@@ -204,6 +207,7 @@ def confirmevent(request, event_id):
             })
     return render(request,"eventmanagement/temp.html")
 
+#delete event by Event Manager
 def deleteevent(request, event_id):
     temp=event_id
     event=Event.objects.get(id=temp)

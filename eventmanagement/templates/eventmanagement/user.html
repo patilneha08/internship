@@ -7,17 +7,20 @@
 </head>
 <body>
     <h1>
-        Welcome {{user.first_name}} {{user.last_name}}
+        Welcome {{user.first_name}} {{user.last_name}}<br>
     </h1>
-    
+    <a href="{%url 'userevent'%}">Your upcoming events</a><br><br>
+    ---------------------------------------------
     {% for event in events %}
         <form action="{%url 'bookevent' event.id %}" method="POST">
         {% csrf_token %}
-            {{ event.name }}   Rs.{{event.cost}}  {{ event.date }}    {{ event.category }}   {{ event.description }}<br>    
+            {{ event.name }}<br>   Rs.{{event.cost}}<br>  {{ event.date }}<br>    {{ event.category }}<br>   {{ event.description }}<br><br>    
             <input type="Submit" value="Book now!" name="event_id">
         </form>
         {% comment %} <a href="{%url 'bookevent' %}">Book Now!</a><br> {% endcomment %}
     {% endfor %}
+    <br>
+    ----------------------------------------------<br>
     <a href="{%url 'userlogout'%}">Logout</a>
 </body>
 {% endblock %}
