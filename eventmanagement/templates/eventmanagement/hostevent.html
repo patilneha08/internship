@@ -1,19 +1,50 @@
 {%extends "eventmanagement/layout.html"%}
 {%block body%}
 <body>
-    <h1>Host an Event</h1>
+    <h1>Host an Event</h1><br>
     <div class="mb-3">
         <div class="container">
             <div class="mb-3">
-                <form role="form" action="{%url 'hostevent'%}" method="POST">
+                {% comment %} <form role="form" action="{%url 'hostevent'%}" method="POST">
                 {%csrf_token%}
                     {{form.as_p}}
                     <input type="submit" class="btn btn-primary" value="Submit"><br>
                 </form>
-                {{form.errors}}
+                {{form.errors}} {% endcomment %}
+                <form role="form" action="{%url 'hostevent'%}" method="POST">
+                {%csrf_token%}    
+                <div class="mb-3">
+                    <input type="text" placeholder="Name of Event" name="name" autocomplete="off"><br><br>
+                    <label for="categories">Choose a Category:</label>
+                    <select id="categories" name="category">
+                        <option value="Horror">Horror</option>
+                        <option value="Movies">Movies</option>
+                        <option value="Streams">Streams</option>
+                        <option value="Plays">Plays</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Art">Art</option>
+                        <option value="Music">Music</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Others">Others</option>
+                    </select><br><br>
+                    <input type="number" id="quantity" name="maxpeople" min="10" placeholder="Maximum no. of participants"><br><br>
+                    <input type="date" min="{{date}}" placeholder="Date" name="date" autocomplete="off"><br><br>
+                    <input type="time" min="07:00" max="20:00" placeholder="Time" name="time"><br><br>
+                    <input type="text" placeholder="Street Address" name="location1"><br><br>
+                    <input type="text" placeholder="Street Address line2" name="location2"><br><br>
+                    <input type="text" placeholder="City" name="city"><br><br>
+                    <input type="text" placeholder="State/Province" name="state"><br><br>
+                    <input type="number" placeholder="Postal/Zip Code" name="pincode" autocomplete="off"><br><br>
+                    <input type="number" placeholder="Price/ticket" name="cost"><br><br>
+                    <label for="w3review">Description of the Event:</label> <br><br> 
+                    <textarea id="w3review" name="description" rows="4" cols="50"></textarea><br><br>
+                    <input type="submit" class="btn btn-primary" value="Submit"><br><br>
+                </div>
+                <a href="{%url 'eventmanagerindex'%}">Back to homepage</a><br>
+                <a href="{%url 'eventmanagerlogout'%}"> Logout</a>
+            </form>
             </div>
         </div>
     </div>  
-    <a href="{%url 'eventmanagerlogout'%}">Logout</a>
 </body>
 {%endblock%}
