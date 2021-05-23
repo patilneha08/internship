@@ -1,30 +1,37 @@
 {%extends "eventmanagement/layout.html"%}
 {%block body%}
+{% load static %}
 <head>
-    <title>Event Manager Login</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="mb-3">
-        <div class="container">
-    {%if message%}
-        <div>{{message}}</div>
-    {%endif%}
-    <form action="{%url 'eventmanagerlogin'%}" method="POST">
-        {%csrf_token%}
-        <h1>Welcome to La fête</h1></b><br>
-        <h2>Business Login</h2>
-        <div class="mb-3">
-        <input type="Email" class="form-label" placeholder="Username or Email" name="username"><br>
-        <input type="password" class="form-label" placeholder="Password" name="password1"><br>
-        <input type="submit" class="btn btn-primary" value="Sign in"><br>
-        </div>
-        Don't have an account?
-        <a href="{%url 'eventmanagerregister'%}">Create account</a><br>
-        <a href="{%url 'userlogin'%}">Click here if Customer</a>
+<body style="background-color:#E5F9E0;">
+{% if message%}
+    <div class="alert alert-primary" role="alert">
+    <div>{{message}}</div>
     </div>
-    </div>
-    </form>
+    {% endif%}
+    <br>
+            <div class="login1">
+                <pre>                                                                                        <img src="{% static "img/Logo.png" %}" height=120 width=120><pre>
+            </div>
+            <div class="logintab">
+                <form action="{%url 'eventmanagerlogin'%}" method="POST">
+                    {% csrf_token %}
+                        <h4 id="blogin">Business Login</h4> 
+                        Username
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" autocomplete="off">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
+                        Password
+                        <input type="password" class="form-control" name="password1"><br>
+                        <pre>                    <input type="submit" class="btn btn-primary" value="Sign in"><br></pre>
+                    <br>
+                    Don't have an account?
+                    <a href="{%url 'eventmanagerregister'%}">Create account</a><br>
+                    Customer Login <a href="{%url 'userlogin'%}">Click Here</a>
+                </form>
+            </div>
 </body>
 {%endblock%}

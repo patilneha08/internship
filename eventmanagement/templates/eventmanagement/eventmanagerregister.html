@@ -1,43 +1,52 @@
-{%extends "eventmanagement/layout.html"%}
-{%block body%}
+{% extends "eventmanagement/layout.html"%}
+{% block body%}
+{% load static%}
 <head>
     <title>Welcome</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="mb-3">
-        <div class="container">
-    <h1>Business account Sign up</h1><br>
-    Create an account<br>
-    <div class="mb-3">
-    <form role="form" action="{%url 'eventmanagerregister'%}" method="POST">
-        {% csrf_token %}
-            First Name<br>
-            <input type="text" name="first_name" autocomplete="off" required><br>
+<body style="background-color:#E5F9E0;">
+{% if message%}
+    <div class="alert alert-primary" role="alert">
+    <div>{{message}}</div>
+    </div>
+    {% endif%}
+     <div class="login1">
+                <pre>                                                                                        <img src="{% static "img/Logo.png" %}" height=120 width=120><pre>
+            </div>
+            <div class="logintab">
+                <form action="{%url 'eventmanagerregister'%}" method="POST">
+                    {% csrf_token %}
+                        <h4 id="blogin">Business Signup</h4> <br>
+                        First Name<br>
+                        <input type="text" name="first_name" class="form-control" autocomplete="off" required><br>
 
-            Last Name<br>
-            <input type="text" name="last_name" autocomplete="off" required><br>
+                        Last Name<br>
+                        <input type="text" name="last_name" class="form-control" autocomplete="off" required><br>
 
-            Contact Number<br>
-            <input type="text" name="phone" autocomplete="off" required><br>
+                        Contact Number<br>
+                        <input type="text" name="phone" class="form-control" autocomplete="off" required><br>
+                        Username
 
-            Username<br>
-            <input type="text" name="username" autocomplete="off" required><br>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
+                        Password
 
-            Password<br>
-            <input type="password" name="password1" minlength="8" autocomplete="off" required><br>
+                        <input type="password" class="form-control" name="password1"><br>
 
-            Confirm Password<br>
-            <input type="password" name="password2" minlength="8" autocomplete="off" required><br>
-            <div id="passwordHelpBlock" class="form-text">
-                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-            </div> 
-            <input type="submit" value="Submit"><br>
-            Already have an account? <a href="{%url 'eventmanagerlogin'%}">Sign in here</a>
-    </form>
-    {%if message%}
-        <div>{{message}}</div>
-    {%endif%}
+                        Confirm Password<br>
+                        <input type="password" name="password2" minlength="8" class="form-control" autocomplete="off" required><br>
+                        <div id="passwordHelpBlock" class="form-text">
+                                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                        </div> <br>
+
+                        <pre>                    <input type="submit" class="btn btn-primary" value="Sign up"><br></pre>
+                    <br>
+                    Already have an account? <a href="{%url 'eventmanagerlogin'%}">Sign in here</a>
+                    
+                </form>
+            </div>
 </body>
 {%endblock%}

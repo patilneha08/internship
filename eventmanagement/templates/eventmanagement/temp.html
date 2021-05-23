@@ -1,19 +1,66 @@
-{%extends "eventmanagement/layout.html"%}
-{%block body%}
+{% extends "eventmanagement/layout.html"%}
+{% block body%}
+{% load static %}
 <head>
-    <title>Event Manager Login</title>
+    <title>Tixhunt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
-<body>
-    <h1> Booking Details </h1><br>
-    ------------------------------------------------
-    <form action="{%url 'confirmevent' event.id %}" method="POST">
-
-        {% csrf_token %}
-            {{ event.name }}<br>  Rs.{{event.cost}}<br>  {{ event.date }}<br>    {{ event.category }}<br>   {{ event.description }}<br>    
-            <label for="number">Number of tickets:</label>
-            <select id="number" name="tickets">
+<body style="background-color:#d2e0bf">
+{% comment %} Header {% endcomment %}
+{% if message%}
+    <div class="alert alert-primary" role="alert">
+    <div>{{message}}</div>
+    </div>
+    {% endif%}
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand"><img src="{% static "img/Logo.png" %}" height=80 width=80></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a style="color:#454545;" class="nav-link active" aria-current="page" ></a>
+        </li>
+        <div class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" style="font-size:15px;" href="{%url 'userindex'%}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'userevent'%}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'userlogout'%}">Sign out</a>
+            </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+<form action="{%url 'confirmevent' event.id %}" method="POST">
+{% csrf_token %}
+    <div id="content1">
+        <div class="first"> Booking Details</div>
+        <div class="second">Name:</div>
+        <div class="third">{{event.name}}</div>
+        <div class="fourth">Category:</div>
+        <div class="fifth">{{event.category}}</div>
+        <div class="sixth">Date:</div>
+        <div class="seventh">{{event.date}}</div>
+        <div class="eightth">Time:</div>
+        <div class="nineth">{{event.time}}</div>
+        <div class="tenth">Location:</div>
+        <div class="eleventh">{{event.location1}}<br>{{event.location2}}</div>
+        <div class="twelveth">City:</div>
+        <div class="thirteenth">{{event.city}}</div>
+        <div class="fourteenth">Description:</div>
+        <div class="fifteenth">{{event.description}}</div>
+        <div class="sixteenth">No. of Tickets:</div>
+        <div class="seventeenth">
+        <select id="number" name="tickets">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -24,16 +71,12 @@
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-            </select><br><br>
-            <input type="Submit" value="Confirm Booking" name="event_id"><br>
-    </form><br>
+        </select><br><br></div>
+        <div class="eighteenth"><input type="submit" class="btn btn-dark btn-lg" name="event_id" value="Confirm Booking"></div>
+    </div>
+</div>
+</form><br>
 
-    {% if message %}
-        <div>{{message}}</div>
-    {% endif %}<br>
-    ---------------------------------------------------<br>
-    <a href="{%url 'userindex'%}">Back to Homepage</a><br>
-    <a href="{%url 'eventmanagerlogout'%}">Logout</a><br>
 
 </body> 
 {% endblock %}

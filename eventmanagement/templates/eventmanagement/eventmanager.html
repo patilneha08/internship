@@ -1,32 +1,69 @@
 {%extends "eventmanagement/layout.html"%}
 {%block body%}
+{% load static %}
 <head>
-    <title>Welcome</title>
+    <title>Tixhunt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
-<body>
-    <h1>
-        Welcome {{user.first_name}}
-    </h1>
-    <a href="{%url 'hostevent'%}">Host an event</a><br><br>
-    {%if message%}
-        <div>{{message}}</div>
-    {%endif%}
-
-    <h5>Your events-</h5>
-    ------------------------------------------------<br>
-        {% for event in events %}
-            Name of the event- {{event.name}}<br>
-            Event Description- {{event.description}}<br>
-            Event Date- {{event.date}}<br>
-            Category- {{event.category}}<br>
-            No. of bookings till now- {{event.count}}<br><br>
-            <a href="{%url 'deleteevent' event.id%}">Delete event</a><br>
-            --------------------------------------------------<br>
-        {% endfor %}
-
-
-    <a href="{%url 'eventmanagerlogout'%}">Logout</a>
+<body style="background-color:#d2e0bf">
+{% if message%}
+    <div class="alert alert-primary" role="alert">
+    <div>{{message}}</div>
+    </div>
+    {% endif%}
+{% comment %} Header {% endcomment %}
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand"><img src="{% static "img/Logo.png" %}" height=80 width=80></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a style="color:#454545;" class="nav-link active" aria-current="page" >Welcome {{user.first_name}} {{user.last_name}},</a>
+        </li>
+        <div class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'eventmanagerindex'%}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'hostevent'%}">Host Event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'eventmanagerlogout'%}">Sign out</a>
+            </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+<br>
+<div class="heading">
+    Your Events
+</div>
+{% for event in events %}
+    <div class="eventbar">       
+        <div id="content">
+            <div class="one"><strong>{{event.name}}</strong></div>
+            <div class="two"></div>
+            <div class="three"><b>Date:</b></div>
+            <div class="four">{{event.date}}</div>
+            <div class="five"><b>About-</b>  {{event.description}}</div>
+            <div class="six"><b>Time:</b></div>
+            <div class="seven">{{event.time}}</div>
+            <div class="nine"><b>No. of bookings:</b></div>
+            <div class="ten" id="del"><a href="{%url 'deleteevent' event.id%}" class="btn btn-dark btn-sm">Delete Event</a></div>
+            <div class="eleven"><b>Category:</b></div>
+            <div class="thirteen">{{event.category}}</div>
+            <div class="twelve">{{event.count}}</div>
+        </div>    
+    </div> 
+{% endfor %}
+<br><br><br><br><br>
 </body>
 {%endblock%}
