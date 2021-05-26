@@ -146,7 +146,7 @@
     font-size: 20px;
     font-family: sans-serif;
     margin:0auto;
-    grid-template-columns: 50% 50%; 
+    grid-template-columns: 50% 50%, auto; 
     /* grid-template-columns: repeat(3, 1fr); */
     grid-template-rows:14;
     margin-top:100px;
@@ -300,6 +300,8 @@
     text-align:center;
     font-family:"Times New Roman", Times, serif;
     margin-left:20px;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
 }
 
 .logintab{
