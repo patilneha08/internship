@@ -1,50 +1,86 @@
 {%extends "eventmanagement/layout.html"%}
 {%block body%}
-<body>
-    <h1>Host an Event</h1><br>
-    <div class="mb-3">
-        <div class="container">
-            <div class="mb-3">
-                {% comment %} <form role="form" action="{%url 'hostevent'%}" method="POST">
-                {%csrf_token%}
-                    {{form.as_p}}
-                    <input type="submit" class="btn btn-primary" value="Submit"><br>
-                </form>
-                {{form.errors}} {% endcomment %}
-                <form role="form" action="{%url 'hostevent'%}" method="POST">
-                {%csrf_token%}    
-                <div class="mb-3">
-                    <input type="text" placeholder="Name of Event" name="name" autocomplete="off"><br><br>
-                    <label for="categories">Choose a Category:</label>
-                    <select id="categories" name="category">
-                        <option value="Horror">Horror</option>
-                        <option value="Movies">Movies</option>
-                        <option value="Streams">Streams</option>
-                        <option value="Plays">Plays</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Art">Art</option>
-                        <option value="Music">Music</option>
-                        <option value="Dance">Dance</option>
-                        <option value="Others">Others</option>
-                    </select><br><br>
-                    <input type="number" id="quantity" name="maxpeople" min="10" placeholder="Maximum no. of participants"><br><br>
-                    <input type="date" min="{{date}}" placeholder="Date" name="date" autocomplete="off"><br><br>
-                    <input type="time" min="07:00" max="20:00" placeholder="Time" name="time"><br><br>
-                    <input type="text" placeholder="Street Address" name="location1"><br><br>
-                    <input type="text" placeholder="Street Address line2" name="location2"><br><br>
-                    <input type="text" placeholder="City" name="city"><br><br>
-                    <input type="text" placeholder="State/Province" name="state"><br><br>
-                    <input type="number" placeholder="Postal/Zip Code" name="pincode" autocomplete="off"><br><br>
-                    <input type="number" placeholder="Price/ticket" name="cost"><br><br>
-                    <label for="w3review">Description of the Event:</label> <br><br> 
-                    <textarea id="w3review" name="description" rows="4" cols="50"></textarea><br><br>
-                    <input type="submit" class="btn btn-primary" value="Submit"><br><br>
-                </div>
-                <a href="{%url 'eventmanagerindex'%}">Back to homepage</a><br>
-                <a href="{%url 'eventmanagerlogout'%}"> Logout</a>
-            </form>
-            </div>
+
+{% load static%}
+<head>
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</head>
+<body style="background-color:#d2e0bf;">
+{% if message%}
+    <div class="alert alert-primary" role="alert">
+    <div>{{message}}</div>
+    </div>
+    {% endif%}
+    {% comment %} Header {% endcomment %}
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand"><img src="{% static "img/Logo.png" %}" height=80 width=80></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a style="color:#454545;" class="nav-link active" aria-current="page" >Welcome {{user.first_name}} {{user.last_name}},</a>
+        </li>
+        <div class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'eventmanagerindex'%}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'hostevent'%}">Host Event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'eventmanagerlogout'%}">Sign out</a>
+            </li>
         </div>
-    </div>  
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+<br>
+    
+    <br>
+    <div class="login1">
+            <div class="logintab">
+                <form action="{%url 'hostevent'%}" method="POST">
+                    {% csrf_token %}
+                        <h4 id="blogin">Host an Event</h4> <br>
+                        <input type="text" class="form-control"  placeholder="Name of Event" name="name" autocomplete="off" required><br>
+                        <label for="categories">Choose a Category:</label>
+                        <select id="categories" name="category" class="form-control" required>
+                            <option value="Horror">Horror</option>
+                            <option value="Movies">Movies</option>
+                            <option value="Streams">Streams</option>
+                            <option value="Plays">Plays</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Art">Art</option>
+                            <option value="Music">Music</option>
+                            <option value="Dance">Dance</option>
+                            <option value="Others">Others</option>
+                        </select><br>
+                        <input type="number" id="quantity" class="form-control"  name="maxpeople" min="10" placeholder="Maximum no. of participants" required><br>
+                        Date:
+                        <input type="date" min="{{date}}" class="form-control" placeholder="Date" name="date" autocomplete="off" required><br>
+                        Time:   
+                        <input type="time" min="07:00" class="form-control" max="20:00" placeholder="Time" name="time" required><br>
+                        <input type="text" class="form-control" placeholder="Street Address" name="location1" required><br>
+                        <input type="text" class="form-control" placeholder="Street Address line2" name="location2" required><br>
+                        <input type="text" class="form-control" placeholder="City" name="city" required><br>
+                        <input type="text" class="form-control" placeholder="State/Province" name="state" required><br>
+                        <input type="number" class="form-control" placeholder="Postal/Zip Code" name="pincode" autocomplete="off" required><br>
+                        <input type="number" class="form-control" placeholder="Price/ticket" name="cost"required><br>
+                        <label for="w3review">Description of the Event:</label> <br>
+                        <textarea id="w3review" class="form-control" name="description" rows="4" cols="50" required></textarea><br>
+                        <pre>                  <input type="submit" class="btn btn-primary" value="Host event"><br></pre>
+
+                   
+                </form>
+            </div>
 </body>
 {%endblock%}

@@ -12,12 +12,17 @@ import datetime
 #Home page for Customer
 def userindex(request):
     if 'uname' in request.session:
-        events=Event.objects.all()       
-        username=request.session['uname']
-        user=Customer.objects.get(username=username)
-        return render(request, 'eventmanagement/user.html',{
-            "events":events, "user":user,
-        })
+        events=Event.objects.all()
+        if events==0:
+            return render(request, 'eventmanagement/user.html',{
+                "events":events, "message":"No upcoming events."
+            })
+        else:
+            username=request.session['uname']
+            user=Customer.objects.get(username=username)
+            return render(request, 'eventmanagement/user.html',{
+                "events":events, "user":user,
+            })
     else:
         return render(request,'eventmanagement/userlogin.html',{
             "message":"You need to Login first."
@@ -26,22 +31,28 @@ def userindex(request):
 #Registration page for Customer 
 def userregister(request):
     if request.method == 'POST':
-        user=Customer()        
-        user.first_name=request.POST.get('first_name')
-        user.last_name=request.POST.get('last_name')
-        user.phone=request.POST.get('phone')
-        user.username=request.POST.get('username')
-        user.password1=request.POST.get('password1')
-        user.password2=request.POST.get('password2')
-        if(user.password1==user.password2):
-            user.save()
-            return render(request,'eventmanagement/userlogin.html',{
-                "message":"Account successfully Created."
-            })
-        else:
+        temp=request.POST.get('username')
+        if Customer.objects.filter(username=temp).exists():
             return render(request,'eventmanagement/userregister.html',{
-                "message":"Passwords do not match."
+                "message":"Account already exists."
             })
+        else:  
+            user=Customer()
+            user.first_name=request.POST.get('first_name')
+            user.last_name=request.POST.get('last_name')
+            user.phone=request.POST.get('phone')
+            user.username=request.POST.get('username')
+            user.password1=request.POST.get('password1')
+            user.password2=request.POST.get('password2')
+            if(user.password1==user.password2):
+                user.save()
+                return render(request,'eventmanagement/userlogin.html',{
+                    "message":"Account successfully Created."
+                })
+            else:
+                return render(request,'eventmanagement/userregister.html',{
+                    "message":"Passwords do not match."
+                })
     return render(request, 'eventmanagement/userregister.html')
 
 #Login page for Customer
@@ -78,9 +89,15 @@ def eventmanagerindex(request):
         user=Eventmanager.objects.get(username=username)
         events=Event.objects.filter(eventmanager=username)
         data = {'date':datetime.date.today()} 
-        return render(request, 'eventmanagement/eventmanager.html',{
-            "user":user, "events":events, "date":data
-        })
+        if events==None:
+             return render(request, 'eventmanagement/eventmanager.html',{
+                "user":user, "message":"No events yet."
+            })
+        else:
+            return render(request, 'eventmanagement/eventmanager.html',{
+                "user":user, "events":events, "date":data
+            })
+           
     else:
         return render(request,'eventmanagement/eventmanagerlogin.html',{
             "message":"You need to Login first."
@@ -89,25 +106,29 @@ def eventmanagerindex(request):
 #Registration page for Event Manager
 def eventmanagerregister(request):
     if request.method == 'POST':
-        user=Eventmanager()
-        user.first_name=request.POST.get('first_name')
-        user.last_name=request.POST.get('last_name')
-        user.phone=request.POST.get('phone')
-        user.username=request.POST.get('username')
-        user.password1=request.POST.get('password1')
-        user.password2=request.POST.get('password2')
-        if(user.password1==user.password2):
-            user.save()
-            return render(request,'eventmanagement/eventmanagerlogin.html',{
-                "message":"Account Created Successfully."
-            })
-        else:
+        temp=request.POST.get('username')
+        if Eventmanager.objects.filter(username=temp).exists():
             return render(request,'eventmanagement/eventmanagerregister.html',{
-                "message":"Passwords do not match."
+                "message":"Account already exists."
             })
-    return render(request, 'eventmanagement/eventmanagerregister.html',{
-        "message":"Something went wrong!"
-    })
+        else:  
+            user=Eventmanager()
+            user.first_name=request.POST.get('first_name')
+            user.last_name=request.POST.get('last_name')
+            user.phone=request.POST.get('phone')
+            user.username=request.POST.get('username')
+            user.password1=request.POST.get('password1')
+            user.password2=request.POST.get('password2')
+            if(user.password1==user.password2):
+                user.save()
+                return render(request,'eventmanagement/eventmanagerlogin.html',{
+                    "message":"Account Created Successfully."
+                })
+            else:
+                return render(request,'eventmanagement/eventmanagerregister.html',{
+                    "message":"Passwords do not match."
+                })
+    return render(request, 'eventmanagement/eventmanagerregister.html')
 
 #Login page for Event Manager
 def eventmanagerlogin(request):
@@ -169,9 +190,14 @@ def userevent(request):
     username=request.session['uname']
     users=Customer.objects.get(username=username)
     events=users.events.all()
-    return render(request,"eventmanagement/userevent.html",{
-                "events":events
-            })
+    if events==0:
+        return render(request,"eventmanagement/userevent.html",{
+            "events":events, "users":users, "message":"No upcoming events"
+        })
+    else:
+        return render(request,"eventmanagement/userevent.html",{
+            "events":events, "users":users
+        })
 
 #Book an event by Customer
 def bookevent(request,event_id):
@@ -194,9 +220,7 @@ def confirmevent(request, event_id):
         temp=event_id
         event=Event.objects.get(id=temp)
         number=int(request.POST.get('tickets'))
-        if int(event.count)+int(number)>int(event.maxpeople):
-            return redirect('userindex')
-        else:
+        if int(event.count)+int(number)<int(event.maxpeople):
             participant=Customer.objects.get(username=request.session['uname'])
             participant.events.add(event)        
             total_cost=int(event.cost)*number
@@ -205,7 +229,8 @@ def confirmevent(request, event_id):
             return render(request,"eventmanagement/confirmation.html",{
                 "event":event, "total_cost":total_cost
             })
-    return render(request,"eventmanagement/temp.html")
+        else:
+            return redirect('userindex')
 
 #delete event by Event Manager
 def deleteevent(request, event_id):
