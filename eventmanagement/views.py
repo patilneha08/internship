@@ -128,9 +128,7 @@ def eventmanagerregister(request):
                 return render(request,'eventmanagement/eventmanagerregister.html',{
                     "message":"Passwords do not match."
                 })
-    return render(request, 'eventmanagement/eventmanagerregister.html',{
-        "message":"Something went wrong!"
-    })
+    return render(request, 'eventmanagement/eventmanagerregister.html')
 
 #Login page for Event Manager
 def eventmanagerlogin(request):
