@@ -11,16 +11,21 @@
 {% if message%}
     <div class="alert alert-primary" role="alert">
     <div>{{message}}</div>
-    </div>
+=======
+<body>
+    <div class="mb-3">
+        <div class="container">
+    {%if message%}
+        <div>{{message}}</div>
+     </div>
     {% endif%}
     <br>
             <div class="login1">
-                <pre>                                                                                 <img src="{% static "img/Logo.png" %}" height=120 width=120><pre>
+                <pre>                                                                                  <img src="{% static "img/Logo.png" %}" height=120 width=120><pre>
             </div>
             <div class="logintab">
-                <form action="{%url 'eventmanagerlogin'%}" method="POST">
+                <form action="{%url 'userlogin'%}" method="POST">
                     {% csrf_token %}
-                        <h4 id="blogin">Business Login</h4> 
                         Username
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" autocomplete="off">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
@@ -29,9 +34,10 @@
                         <pre>                    <input type="submit" class="btn btn-primary" value="Sign in"><br></pre>
                     <br>
                     Don't have an account?
-                    <a href="{%url 'eventmanagerregister'%}">Create account</a><br>
-                    Customer Login <a href="{%url 'userlogin'%}">Click Here</a>
+                    <a href="{%url 'userregister'%}">Create account</a><br>
+                    Event Manager Login<a href="{%url 'eventmanagerlogin'%}"> Click Here</a>
                 </form>
             </div>
+            
 </body>
 {%endblock%}
